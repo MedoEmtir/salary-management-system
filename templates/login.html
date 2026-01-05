@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Salary Management System | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            direction: rtl;
+        }
+
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .login-card h1 {
+            margin: 0;
+            font-size: 26px;
+            color: #1f2933;
+            font-weight: 700;
+        }
+
+        .login-card p {
+            margin: 15px 0 30px;
+            font-size: 15px;
+            color: #6b7280;
+        }
+
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .google-btn:hover {
+            background: #f9fafb;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .google-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h1>نظام إدارة المرتبات</h1>
+        <p>هذه المنصة مخصصة للإدارة فقط. الرجاء تسجيل الدخول باستخدام حساب Google المعتمد.</p>
+
+        <!-- رابط تسجيل الدخول (يتبدل لاحقًا بالباك إند) -->
+        <a href="/login/google" class="google-btn">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google">
+            تسجيل الدخول باستخدام Google
+        </a>
+
+        <div class="footer-text">
+            © 2026 - للإستخدام الإداري فقط
+        </div>
+    </div>
+
+</body>
+</html>

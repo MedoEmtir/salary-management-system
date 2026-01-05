@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>إدارة المرتبات | Salary Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background: #f4f6f8;
+            direction: rtl;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #ffffff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .navbar .title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2933;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .navbar a:hover {
+            background: #f3f4f6;
+        }
+
+        /* Main */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1f2933;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        /* Table */
+        .table-wrapper {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        thead {
+            background: #f9fafb;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        th {
+            font-weight: 700;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            color: #1f2933;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        tr:hover td {
+            background: #f9fafb;
+        }
+
+        .salary-total {
+            font-weight: 700;
+        }
+
+        .salary-remaining {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .salary-paid {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            text-decoration: none;
+            padding: 6px 12px;
+            background: #2563eb;
+            color: #ffffff;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .no-action {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="title">إدارة المرتبات</div>
+        <a href="/dashboard">الرجوع للداشبورد</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-title">قائمة مرتبات الموظفين</div>
+        <div class="page-subtitle">
+            عرض تفاصيل المرتبات للموظفين المسجلين في النظام
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>اسم الموظف</th>
+                        <th>المرتب المسحوب</th>
+                        <th>المرتب الباقي</th>
+                        <th>إجمالي المرتب</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>{{ emp.name }}</td>
+                        <td class="salary-paid">{{ emp.paid_salary }} د.ل</td>
+                        <td class="salary-remaining">{{ emp.remaining_salary }} د.ل</td>
+                        <td class="salary-total">{{ emp.total_salary }} د.ل</td>
+                        <td>
+                            {% if is_admin %}
+                                <a href="/edit/{{ emp.id }}" class="edit-btn">تعديل</a>
+                            {% else %}
+                                <span class="no-action">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
