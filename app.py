@@ -8,11 +8,14 @@ import os
 # =====================
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
 
-app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
-app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
+if not SECRET_KEY or not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
+    raise RuntimeError("Missing environment variables (SECRET_KEY or GOOGLE_OAUTH_CLIENT_ID or GOOGLE_OAUTH_CLIENT_SECRET)")
 
+app.config["SECRET_KEY"] = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -42,10 +45,12 @@ AUTHORIZED_EMAILS = [
 ADMIN_EMAIL = "medo.emtir@gmail.com"
 
 # =====================
-# Google OAuth
+# Google OAuth (IMPORTANT FIX)
 # =====================
 google_bp = make_google_blueprint(
-    scope=["profile", "email"],
+    client_id=GOOGLE_CLIENT_ID,
+    client_secret=GOOGLE_CLIENT_SECRET,
+    scope=["openid", "email", "profile"],
     redirect_url="/dashboard"
 )
 
@@ -66,9 +71,12 @@ def dashboard():
 
     resp = google.get("/oauth2/v3/userinfo")
     if not resp.ok:
-        return "Failed to fetch user info", 400
+        return f"Google userinfo error: {resp.text}", 400
 
     email = resp.json().get("email")
+    if not email:
+        return "Email not found from Google", 400
+
     session["email"] = email
 
     if email not in AUTHORIZED_EMAILS and email != ADMIN_EMAIL:
@@ -111,11 +119,13 @@ def logout():
     return redirect("/")
 
 # =====================
-# Run app
+# Init DB (IMPORTANT FOR RENDER)
 # =====================
 with app.app_context():
     db.create_all()
 
+# =====================
+# Run
+# =====================
 if __name__ == "__main__":
     app.run(debug=True)
-
