@@ -97,7 +97,29 @@ def salaries():
         employees=employees,
         is_admin=is_admin
     )
+@app.route("/add-employee", methods=["GET", "POST"])
+def add_employee():
+    # حماية: المدير فقط
+    if session.get("email") != ADMIN_EMAIL:
+        abort(403)
 
+    if request.method == "POST":
+        name = request.form["name"]
+        total_salary = int(request.form["total_salary"])
+        paid_salary = int(request.form["paid_salary"])
+
+        employee = Employee(
+            name=name,
+            total_salary=total_salary,
+            paid_salary=paid_salary
+        )
+
+        db.session.add(employee)
+        db.session.commit()
+
+        return redirect(url_for("salaries"))
+
+    return render_template("add_employee.html")
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit_salary(id):
     if session.get("email") != ADMIN_EMAIL:
@@ -129,3 +151,4 @@ with app.app_context():
 # =====================
 if __name__ == "__main__":
     app.run(debug=True)
+
