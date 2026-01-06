@@ -13,7 +13,7 @@ GOOGLE_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
 
 if not SECRET_KEY or not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
-    raise RuntimeError("Missing environment variables (SECRET_KEY or GOOGLE_OAUTH_CLIENT_ID or GOOGLE_OAUTH_CLIENT_SECRET)")
+    raise RuntimeError("Missing environment variables")
 
 app.config["SECRET_KEY"] = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
@@ -45,12 +45,12 @@ AUTHORIZED_EMAILS = [
 ADMIN_EMAIL = "medo.emtir@gmail.com"
 
 # =====================
-# Google OAuth (IMPORTANT FIX)
+# Google OAuth (FIXED ✅)
 # =====================
 google_bp = make_google_blueprint(
     client_id=GOOGLE_CLIENT_ID,
     client_secret=GOOGLE_CLIENT_SECRET,
-    scope=["openid", "email", "profile"],
+    scope=["email", "profile"],   # ✅ لا openid
     redirect_url="/dashboard"
 )
 
@@ -75,7 +75,7 @@ def dashboard():
 
     email = resp.json().get("email")
     if not email:
-        return "Email not found from Google", 400
+        return "Email not returned from Google", 400
 
     session["email"] = email
 
@@ -119,7 +119,7 @@ def logout():
     return redirect("/")
 
 # =====================
-# Init DB (IMPORTANT FOR RENDER)
+# Init DB
 # =====================
 with app.app_context():
     db.create_all()
