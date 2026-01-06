@@ -64,7 +64,7 @@ def dashboard():
     if not google.authorized:
         return redirect(url_for("google.login"))
 
-    resp = google.get("/oauth2/v2/userinfo")
+    resp = google.get("/oauth2/v3/userinfo")
     if not resp.ok:
         return "Failed to fetch user info", 400
 
@@ -113,8 +113,9 @@ def logout():
 # =====================
 # Run app
 # =====================
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
+with app.app_context():
+    db.create_all()
 
+if __name__ == "__main__":
     app.run(debug=True)
+
