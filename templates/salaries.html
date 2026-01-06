@@ -152,7 +152,11 @@
         <div class="page-subtitle">
             عرض تفاصيل المرتبات للموظفين المسجلين في النظام
         </div>
-
+        {% if is_admin %}
+            <a href="{{ url_for('add_employee') }}" class="btn btn-primary">
+                ➕ إضافة موظف
+            </a>
+        {% endif %}
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -186,4 +190,5 @@
     </div>
 
 </body>
+
 </html>
