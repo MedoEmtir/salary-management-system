@@ -138,10 +138,6 @@ def edit_salary(id):
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/")
-@app.route("/logout")
-def logout():
-    session.clear()
 
     # تسجيل خروج من Google OAuth
     return redirect(
@@ -159,5 +155,6 @@ with app.app_context():
 # =====================
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
