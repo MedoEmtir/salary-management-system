@@ -1,8 +1,14 @@
 from flask import Flask, render_template, session
 from flask_sqlalchemy import SQLAlchemy
-
+import os
 app = Flask(__name__)
+
+app.config["GOOGLE_OAUTH_CLIENT_ID"] ='586401378142-q8t1augcg7q8k8ehclrcb063rbir7b0o.apps.googleusercontent.com'
+os.getenv("GOOGLE_OAUTH_CLIENT_ID")
+app.config["GOOGLE_OAUTH_CLIENT_SECRET"] ='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'
+os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
 app.config['SECRET_KEY'] = 'dev'
+os.getenv("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 AUTHORIZED_EMAILS = [
@@ -67,4 +73,5 @@ def edit_salary(id):
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+
     app.run(debug=True)
