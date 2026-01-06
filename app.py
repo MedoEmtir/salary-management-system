@@ -38,7 +38,7 @@ class Employee(db.Model):
 # Permissions
 # =====================
 AUTHORIZED_EMAILS = [
-    "manager1@gmail.com",
+    "hmadalawame@gmail.com",
     "manager2@gmail.com"
 ]
 
@@ -155,6 +155,7 @@ with app.app_context():
 # =====================
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
