@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إضافة موظف</title>
+</head>
+<body>
+
+<h2>➕ إضافة موظف جديد</h2>
+
+<form method="post">
+    <label>اسم الموظف</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>المرتب الإجمالي</label><br>
+    <input type="number" name="total_salary" required><br><br>
+
+    <label>المرتب المسحوب</label><br>
+    <input type="number" name="paid_salary" value="0" required><br><br>
+
+    <button type="submit">💾 حفظ</button>
+</form>
+
+<br>
+<a href="{{ url_for('salaries') }}">⬅️ الرجوع لقائمة الرواتب</a>
+
+</body>
+</html>
